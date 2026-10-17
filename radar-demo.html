@@ -1,0 +1,88 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Radar de Artigos (demonstração)</title>
+<style>
+:root{--bg:#fff;--surface:#f7f7fb;--text:#1b1f3b;--muted:#5b6080;--accent:#c4510a;--accent-bg:#fde7d3;--border:#dcdfec;--ok:#1b7f4b;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14162b;--surface:#1d2040;--text:#e9eaf5;--muted:#a3a8c7;--accent:#ff9a4d;--accent-bg:#3a2a22;--border:#343862;--ok:#6fd6a0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14162b;--surface:#1d2040;--text:#e9eaf5;--muted:#a3a8c7;--accent:#ff9a4d;--accent-bg:#3a2a22;--border:#343862;--ok:#6fd6a0;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:820px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:.2em 0 .1em}h2{font-size:1.05rem;margin:1.8em 0 .5em;color:var(--accent)}
+.sub{color:var(--muted);margin:0 0 1em}.box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:560px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;font-size:.92rem}th{color:var(--muted);font-weight:600}
+button{font:inherit;min-height:44px;padding:8px 18px;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+button.sec{background:transparent;color:var(--accent)}button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.status{color:var(--muted);margin:.6em 0}
+#log{margin:.4em 0;padding-left:1.2em;color:var(--muted);font-size:.9rem}
+#out{white-space:pre-wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;min-height:4em}
+label.ck{display:flex;gap:10px;align-items:flex-start;padding:6px 0}input[type=checkbox]{width:20px;height:20px;margin-top:3px;accent-color:var(--accent)}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;background:var(--accent-bg);color:var(--accent);font-size:.8rem}
+.note{color:var(--muted);font-size:.88rem}details{margin-top:.6em}summary{cursor:pointer;color:var(--accent)}
+</style></head><body><main>
+<h1>Radar de Artigos (demonstração)</h1>
+<p class="sub"><strong>Versão de demonstração com dados fictícios.</strong> Um agente simples sobre o banco de soluções da Diretoria de P&amp;D: a IA lista os casos, escolhe um, lê os detalhes e escreve um rascunho de resumo para artigo. A revisão final é humana.</p>
+
+<h2>1. Casos do banco (pontuação por regra)</h2>
+<div class="scroll"><table><thead><tr><th>ID</th><th>Solução</th><th>Status</th><th>Pontos</th><th>O que falta para virar artigo</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="note">Regra (0 a 6): Implantada = 2 (Em implantação = 1); resultado registrado = 2; passo a passo = 1; fonte = 1. É uma regra simples, não uma análise de IA.</p>
+
+<h2>2. Pedir à IA um rascunho</h2>
+<div class="box">
+<div class="row"><button id="go" disabled>Verificando IA…</button><button id="stop" class="sec" hidden>Parar</button></div>
+<p class="status" id="st" role="status" aria-live="polite">Aguarde um instante.</p>
+<ol id="log"></ol>
+<div id="out" aria-live="polite">O rascunho aparece aqui.</div>
+<p class="note" id="wc"></p>
+</div>
+<p class="note">O botão usa a IA da conta de quem abre a página e pede permissão na primeira vez. Sem acesso à IA, o botão fica desativado e vale o exemplo abaixo.</p>
+
+<h2>3. Revisão humana</h2>
+<div class="box" id="rev">
+<label class="ck"><input type="checkbox"> Conferi cada fato do rascunho com o caso.</label>
+<label class="ck"><input type="checkbox"> Resolvi todos os [A CONFIRMAR]: completei ou removi.</label>
+<label class="ck"><input type="checkbox"> Não há número, data ou nome que não esteja no banco.</label>
+<label class="ck"><input type="checkbox"> O resultado está descrito como qualitativo ou medido, sem exagero.</label>
+<p class="status" id="rs"><strong>Sem revisão ainda.</strong></p></div>
+
+<details><summary>Exemplo ilustrativo de saída</summary>
+<div class="box" style="margin-top:.6em"><p class="note">Escrito por Claude só com os fatos do caso fictício DEMO-S001. Não foi gerado pelo botão. Serve para quem não tem acesso à IA.</p>
+<div style="white-space:pre-wrap">Caso escolhido: DEMO-S001 — é a única solução implantada, com resultado registrado e fonte indicada.
+
+A perda de conhecimento na troca de gestão é um problema comum em projetos de extensão. A solução proposta é um checklist de passagem de cargo: cada diretor preenche, nas duas últimas semanas da gestão, um roteiro com pendências, contatos e aprendizados, e há uma reunião de 30 minutos com quem assume. O custo estimado é zero e o esforço, baixo. O resultado registrado é qualitativo e fictício: a nova gestão relatou menos pendências perdidas. Não há medição com números [A CONFIRMAR].</div></div></details>
+
+<p class="note" style="margin-top:2em">Dados fictícios, só para demonstrar o funcionamento. Os dados reais do banco ficam fora deste repositório. O botão de IA só funciona dentro do Claude; aqui fora ele aparece desativado.</p>
+</main>
+<script>
+const DATA=[{"id": "DEMO-S001", "solucao": "Checklist de passagem de cargo entre gestões", "problema": "DEMO-P001 · Perda de conhecimento na troca de gestão", "descricao": "Roteiro de uma página que cada diretor preenche antes de sair, com pendências, contatos e aprendizados.", "passos": "1) Criar o modelo de checklist.\n2) Cada diretor preenche nas duas últimas semanas da gestão.\n3) Reunião de 30 minutos com quem assume.", "recursos": "Modelo em planilha e 30 minutos por diretoria", "custo": "0", "esforco": "Baixo", "impacto": "Alto", "resultado": "Dado fictício: a nova gestão relatou menos pendências perdidas.", "status": "Implantada", "fonte": "Projeto de extensão de exemplo (fictício)"}, {"id": "DEMO-S002", "solucao": "Calendário compartilhado de eventos", "problema": "DEMO-P002 · Eventos marcados na mesma data", "descricao": "Calendário único com as datas de todos os projetos.", "passos": "", "recursos": "", "custo": "0", "esforco": "Baixo", "impacto": "Médio", "resultado": "", "status": "Ideia", "fonte": "Projeto de extensão de exemplo (fictício)"}];
+const $=s=>document.querySelector(s);
+const score=c=>(c.status==="Implantada"?2:c.status==="Em implantação"?1:0)+(c.resultado?2:0)+(c.passos?1:0)+(c.fonte?1:0);
+const falta=c=>[c.status==="Implantada"?"":"implantar",c.resultado?"":"registrar resultado",c.passos?"":"escrever o passo a passo",c.fonte?"":"indicar a fonte"].filter(Boolean).join("; ")||"nada: pronto para rascunho";
+for(const c of DATA){const tr=document.createElement("tr");
+ for(const v of [c.id,c.solucao,c.status,score(c)+" de 6",falta(c)]){const td=document.createElement("td");td.textContent=v;tr.append(td)}
+ $("#rows").append(tr)}
+const PROMPT="Você ajuda a Diretoria de P&D de um projeto de extensão universitário (CEMP/UFC) a escolher um caso do banco de soluções para virar um artigo curto. Passos: 1) chame listar_casos; 2) escolha o caso com maior potencial de artigo, considerando os pontos; 3) chame ler_caso com o id escolhido; 4) escreva um resumo de 150 a 200 palavras, em português, para o artigo. Regras: use SOMENTE os fatos devolvidos pelas ferramentas; não invente números, datas, nomes ou resultados; onde faltar informação, escreva [A CONFIRMAR]; diga se o resultado é qualitativo ou medido. Formato: primeira linha 'Caso escolhido: <id> — <motivo em uma frase>', uma linha em branco e depois o resumo.";
+const MSG={not_granted:"Você não permitiu o uso da IA nesta página.",rate_limited:"Limite de uso da IA atingido. Tente mais tarde."};
+let sample=null,ctl;
+(async()=>{try{sample=window.claude?await window.claude.use("sample"):null}catch(e){sample=null}
+ if(sample){$("#go").disabled=false;$("#go").textContent="Pedir rascunho à IA";$("#st").textContent="Pronto. O primeiro clique pede sua permissão."}
+ else{$("#go").textContent="IA indisponível aqui";$("#st").textContent="A IA não está disponível neste navegador. Veja o exemplo ilustrativo abaixo."}})();
+$("#stop").onclick=()=>ctl&&ctl.abort();
+$("#go").onclick=async()=>{ctl=new AbortController();const out=$("#out"),log=$("#log");
+ out.textContent="";log.innerHTML="";$("#wc").textContent="";$("#st").textContent="Pensando… (pode levar até 1 ou 2 minutos)";
+ $("#go").disabled=true;$("#stop").hidden=false;
+ const mark=t=>{const li=document.createElement("li");li.textContent=t;log.append(li)};
+ const tools=[
+  {name:"listar_casos",description:"Devolve a lista de casos do banco com id, solução, status, pontos (0 a 6) e o que falta. Use primeiro.",
+   execute:()=>{mark("A IA chamou listar_casos");return DATA.map(c=>({id:c.id,solucao:c.solucao,status:c.status,pontos:score(c),falta:falta(c)}))}},
+  {name:"ler_caso",description:"Devolve todos os campos de um caso: problema, descrição, passo a passo, recursos, custo, esforço, impacto, status, resultado e fonte. Entrada: id do caso.",
+   inputSchema:{type:"object",properties:{id:{type:"string"}},required:["id"]},
+   execute:i=>{const c=DATA.find(x=>x.id===String(i.id));if(!c)throw new Error("caso não encontrado");mark("A IA chamou ler_caso("+c.id+")");return c}}];
+ try{const r=await sample(PROMPT,{tools,modelTier:"default",signal:ctl.signal,cache:false,onText:({text})=>{$("#st").textContent="Escrevendo…";out.textContent=text}});
+  out.textContent=r.text;$("#st").textContent="Pronto. Faça a revisão abaixo antes de usar.";
+  $("#wc").textContent=r.text.trim().split(/\s+/).length+" palavras no total (inclui a linha do caso escolhido).";
+ }catch(e){if(e&&e.text)out.textContent=e.text;$("#st").textContent=e&&e.code==="cancelled"?"Interrompido.":(MSG[e&&e.code]||"Não foi possível gerar agora.")}
+ finally{$("#go").disabled=false;$("#stop").hidden=true}};
+const upd=()=>{const n=document.querySelectorAll("#rev input:checked").length;$("#rs").innerHTML="<strong>"+(n===4?"Revisado":n?"Em revisão: "+n+" de 4":"Sem revisão ainda")+"</strong>"};
+document.querySelectorAll("#rev input").forEach(i=>i.onchange=upd);
+</script></body></html>
