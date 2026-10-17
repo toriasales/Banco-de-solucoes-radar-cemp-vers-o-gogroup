@@ -31,7 +31,8 @@ Além disso, na Diretoria de Pesquisa e Desenvolvimento do CEMP (UFC), esse regi
 
 - `README.md`: esta descrição.
 - `radar-demo.html`: página do Radar de Artigos (código HTML e JavaScript) com dados fictícios.
+- `banco-de-solucoes-modelo.xlsx`: estrutura da planilha, com linhas de exemplo.
 
 ## Privacidade
 
-Os dados reais do banco são internos do CEMP e não estão neste repositório. Os casos de `radar-demo.html` são fictícios.
+Os dados reais do banco são internos do CEMP e não estão neste repositório. Os casos de `radar-demo.html` e `banco-de-solucoes-modelo.xlsx` são fictícios.
