@@ -4,7 +4,9 @@ Projeto feito com apoio de IA para a seleção GoHacks Talent 2026, por Maria Vi
 
 ## O problema
 
-Projetos de extensão enfrentam problemas recorrentes (engajamento de membros, liderança, organização de eventos) e precisam de um lugar para registrar o problema, a solução e o que foi aprendido. Na Diretoria de Pesquisa e Desenvolvimento do CEMP (UFC) também há a produção de artigos, que parte desses casos.
+Projetos de extensão são organizados e conduzidos, em grande parte, por estudantes que estão desenvolvendo suas primeiras experiências com liderança, gestão de pessoas e organização de atividades. Por isso, desafios como engajamento dos membros, comunicação e organização de eventos podem se repetir a cada nova gestão, especialmente quando o conhecimento adquirido pelos antigos líderes não é registrado e transmitido. O Banco de Soluções busca reduzir essa perda de aprendizado, reunindo problemas enfrentados, soluções testadas e lições aprendidas para que novos líderes possam aproveitar a experiência de quem veio antes, tornando a gestão mais fluida, estruturada e consistente.
+
+Além disso, na Diretoria de Pesquisa e Desenvolvimento do CEMP (UFC), esse registro também pode servir como ponto de partida para a produção de artigos científicos. Afinal, os problemas enfrentados e as soluções desenvolvidas dentro dos próprios projetos de extensão podem gerar aprendizados relevantes para outras equipes e organizações estudantis. Para isso, o projeto conta com o Radar de Artigos, uma ferramenta que utiliza regras de pontuação e o apoio da inteligência artificial para identificar casos com potencial de publicação e auxiliar na organização de ideias para a elaboração de resumos científicos. Dessa forma, a proposta conecta a experiência prática à produção de conhecimento, permitindo que os aprendizados não apenas contribuam para a melhoria contínua dos projetos, mas também possam ser sistematizados e compartilhados com outras pessoas.
 
 ## O que construí
 
