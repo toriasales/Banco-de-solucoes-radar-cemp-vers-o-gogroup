@@ -11,7 +11,7 @@ Além disso, na Diretoria de Pesquisa e Desenvolvimento do CEMP (UFC), esse regi
 ## O que construí
 
 1. **Banco de Soluções (planilha):** abas por área, prioridade calculada por impacto × probabilidade, análise de quick win, painel automático e registro de conversas com fontes. Hoje tem 4 problemas e 2 soluções reais, 1 delas implantada, com retorno qualitativo e sem medição com números ainda.
-2. **Radar de Artigos (fórmulas na planilha):** pontua cada solução de 0 a 6 por regra simples, sugere o caso com mais potencial de artigo, monta um prompt para uma IA e organiza a revisão humana do rascunho.
+2. **Radar de Artigos (aba da planilha):** liga o banco à produção de artigos. Por fórmulas, pontua cada solução de 0 a 6 por regra simples, sugere o caso com mais potencial de artigo, monta um prompt para uma IA e organiza a revisão humana do rascunho.
 3. **Radar de Artigos (página com IA):** um agente simples. A IA chama a função `listar_casos`, escolhe um caso, chama `ler_caso` e escreve um rascunho de resumo. O arquivo `radar-demo.html` é a versão de demonstração, com dados fictícios.
 
 ## Como usei IA
@@ -25,7 +25,11 @@ Além disso, na Diretoria de Pesquisa e Desenvolvimento do CEMP (UFC), esse regi
 - O banco é pequeno e o único resultado registrado é qualitativo.
 - A escolha do caso é por regra; a IA entra na escolha apenas quando o botão da página é usado.
 - O botão de IA da página usa a conta de quem a abre dentro do Claude. Fora dele, o botão aparece desativado e vale o exemplo ilustrativo.
-- Não há automação com macro nem chave de API: planilhas compartilhadas não são lugar seguro para isso.
+
+## Como ver a ligação entre o banco e os artigos
+
+Abra `banco-de-solucoes-modelo-1.xlsx` e vá à aba **Radar de Artigos**. A seção 2 mostra o ranking calculado a partir das abas de Soluções, a seção 4 mostra o prompt montado com os fatos do caso escolhido, e a seção 6 traz a revisão humana. Se uma solução ganhar resultado ou mudar de status nas abas de Soluções, o ranking e o prompt mudam sozinhos.
+
 
 ## Arquivos
 
